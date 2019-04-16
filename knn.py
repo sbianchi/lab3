@@ -1,6 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 import math
+import random
 
 def loadData(filename):
     data_matrix = []
@@ -53,10 +54,31 @@ def getNeighbors(training_set,test_instance,k):
     distances = []
     for index in range(len(training_set)):
         dist = euclideanDistance(test_instance, training_set[index][0])
-        distances.append((training_set[index], dist, training_set[index][0][1]))
+        distances.append((training_set[index], dist))
     distances.sort(key=lambda x: x[1])
     neighbors = distances[:k]
     return neighbors    
+
+def mostVotedLabel(dataset):
+    count = {}
+    total = len(dataset)
+    max_votes = -1
+    most_voted_label = ''
+
+    for ((features, label),dist) in dataset:
+        if label in count:
+            count[label] = count[label] + 1
+        else:
+            count[label] = 1  
+
+    for key,value in count.items():
+        if value > max_votes:
+            most_voted_label = key
+    return most_voted_label
+
+
+def isSuccesfull(real_label,neighbors,k):
+    return (real_label == mostVotedLabel(neighbors))     
 
 
 def main():
@@ -68,12 +90,18 @@ def main():
     test_set = all_set[math.floor(len(all_set)*0.8):]
 
     test_res = []
-    errors = 0
-    for i in range(len(test_set)):
-        n = getNeighbors(training_set,test_set[i][0],1)
-        if (test_set[i][1] != n[0][0][1]):
-            errors += 1    
 
-    print(errors/len(test_set))        
+    for k in [1,3,7]:
+        errors = 0
+        for i in range(len(test_set)):
+            n = getNeighbors(training_set,test_set[i][0],k)            
+            if (not isSuccesfull(test_set[i][1],n,k)):
+                errors += 1    
+
+        print("Errores para k:")
+        print(k)
+        print()
+        print(errors/len(test_set)) 
+        print()       
 
 main()
