@@ -104,4 +104,28 @@ def main():
         print(errors/len(test_set)) 
         print()       
 
+def mainB():
+    all_set = loadData('covertype/covtype.data')
+    random.shuffle(all_set)
+
+    training_set = all_set[:math.floor(len(all_set)*0.1)]
+
+    test_set = all_set[math.floor(len(all_set)*0.98):]
+
+    test_res = []
+
+    for k in [1,3,7]:
+        errors = 0
+        for i in range(len(test_set)):
+            n = getNeighbors(training_set,test_set[i][0],k)            
+            if (not isSuccesfull(test_set[i][1],n)):
+                errors += 1    
+
+        print("Errores para k:")
+        print(k)
+        print()
+        print(errors/len(test_set)) 
+        print() 
+
+
 main()
