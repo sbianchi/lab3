@@ -69,15 +69,15 @@ def mostVotedLabel(dataset):
         if label in count:
             count[label] = count[label] + 1
         else:
-            count[label] = 1  
-
+            count[label] = 1         
     for key,value in count.items():
         if value > max_votes:
+            max_votes = value
             most_voted_label = key
     return most_voted_label
 
 
-def isSuccesfull(real_label,neighbors,k):
+def isSuccesfull(real_label,neighbors):
     return (real_label == mostVotedLabel(neighbors))     
 
 
@@ -85,7 +85,7 @@ def main():
     all_set = loadData('iris/iris.data')
     random.shuffle(all_set)
 
-    training_set = all_set[:math.floor(len(all_set)*0.1)]
+    training_set = all_set[:math.floor(len(all_set)*0.8)]
 
     test_set = all_set[math.floor(len(all_set)*0.8):]
 
@@ -95,7 +95,7 @@ def main():
         errors = 0
         for i in range(len(test_set)):
             n = getNeighbors(training_set,test_set[i][0],k)            
-            if (not isSuccesfull(test_set[i][1],n,k)):
+            if (not isSuccesfull(test_set[i][1],n)):
                 errors += 1    
 
         print("Errores para k:")
