@@ -37,7 +37,7 @@ def loadDataCovertype(filename):
 
         data = (features, tokens[len(tokens) - 1])
 
-        data_matrix.append(data)
+        data_matrix.append(data)    
         #aux += 1
         #if aux == 500:
         #   break
@@ -45,9 +45,8 @@ def loadDataCovertype(filename):
 
 def euclideanDistance(v1, v2):
     dim, res = len(v1), 0
-    for i in range(dim):
-        res += math.pow(v1[i] - v2[i], 2)
-    return math.sqrt(res)
+    res = [math.pow(v1[i] - v2[i], 2) for i in range(dim)]        
+    return math.sqrt(sum(res))
 
 def getNeighbors(training_set,test_instance,k):
 
@@ -108,9 +107,9 @@ def mainB():
     all_set = loadData('covertype/covtype.data')
     random.shuffle(all_set)
 
-    training_set = all_set[:math.floor(len(all_set)*0.1)]
+    training_set = all_set[:math.floor(len(all_set)*0.8)]
 
-    test_set = all_set[math.floor(len(all_set)*0.98):]
+    test_set = all_set[math.floor(len(all_set)*0.9999):]
 
     test_res = []
 
@@ -128,4 +127,4 @@ def mainB():
         print() 
 
 
-main()
+mainB()
