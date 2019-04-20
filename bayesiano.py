@@ -14,19 +14,9 @@ def separateByClass(dataset):
 	    separated[vector[-1]].append(vector)
     return separated
 
-def separateByClass(dataset):
-	separated = {}
-	for i in range(len(dataset)):
-		vector = dataset[i]
-		if (vector[-1] not in separated):
-			separated[vector[-1]] = []
-		separated[vector[-1]].append(vector[0])
-	return separated
-
-
 def mean(numbers):
     return sum(numbers)/float(len(numbers))
- 
+
 def stdev(numbers):
     avg = mean(numbers)
     variance = sum([pow(x-avg,2) for x in numbers])/float(len(numbers)-1)
@@ -41,7 +31,7 @@ def summarizeByClass(dataset):
     separated = separateByClass(dataset)
     summaries = {}
     for classValue, instances in separated.items():
-    	summaries[classValue] = summarize(instances)
+        summaries[classValue] = summarize(instances)
     return summaries
 
 def calculateProbability(x, mean, stdev):
@@ -80,7 +70,6 @@ def getAccuracy(testSet, predictions):
     	if testSet[x][-1] == predictions[x]:
     		correct += 1
     return (correct/float(len(testSet))) * 100.0
-    
 
 def loadData(filename):
     data_matrix = []
@@ -91,10 +80,20 @@ def loadData(filename):
         label = ''
         for i in range(0, len(tokens) - 1):
             data.append(float(tokens[i]))
-            label = tokens[-1]
+            label = labelToNumber(tokens[-1])
         data.append(label)
         data_matrix.append(data)
     return data_matrix
+
+def labelToNumber(name):
+    if name == 'Iris-setosa\n':
+        return 0
+    elif name == 'Iris-versicolor\n':
+        return 1
+    elif name == 'Iris-virginica\n':
+        return 2
+    else:
+        pdb.set_trace()
 
 def loadDataCovertype(filename):
     data_matrix = []
@@ -118,7 +117,7 @@ def loadDataCovertype(filename):
 
         data = (features, tokens[len(tokens) - 1])
 
-        data_matrix.append(data)    
+        data_matrix.append(data)
     return data_matrix
 
 def main():
@@ -132,7 +131,7 @@ def main():
     # test model
     predictions = getPredictions(summaries, test_set)
     accuracy = getAccuracy(test_set, predictions)
-    print('Accuracy: {0}%').format(accuracy)
+    print('Accuracy: {0}%'.format(accuracy))
 
 
 main()
