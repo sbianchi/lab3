@@ -8,10 +8,10 @@ from copy import copy
 def separateByClass(dataset):
     separated = {}
     for i in range(len(dataset)):
-	    vector = dataset[i]
-	    if (vector[-1] not in separated):
-		    separated[vector[-1]] = []
-	    separated[vector[-1]].append(vector)
+        vector = dataset[i]
+        if (vector[-1] not in separated):
+                separated[vector[-1]] = []
+        separated[vector[-1]].append(vector[:-1])
     return separated
 
 def mean(numbers):
@@ -24,7 +24,6 @@ def stdev(numbers):
 
 def summarize(dataset):
     summaries = [(mean(attribute), stdev(attribute)) for attribute in zip(*dataset)]
-    del summaries[-1]
     return summaries
 
 def summarizeByClass(dataset):
