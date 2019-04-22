@@ -22,8 +22,29 @@ def stdev(numbers):
     variance = sum([pow(x-avg,2) for x in numbers])/float(len(numbers)-1)
     return math.sqrt(variance)
 
+def calculateDistribution(categorical_attribute):
+    appearences = [0 for i in range(len(categorical_attribute[0]))]
+    for instance in categorical_attribute:
+        for i in instance:
+            if instance[i]:
+                appearences [i] += 1
+    distribution = [appearences [i]/len(categorical_attribute) for i in range(len(appearences))]
+    return distribution
+
 def summarize(dataset):
-    summaries = [(mean(attribute), stdev(attribute)) for attribute in zip(*dataset)]
+    summaries = []
+
+    attributes = [[] for i in range(len(dataset[0]))]
+    for i in range(len(dataset)):
+        for j in range(len(dataset[i])):
+            attributes[j].append(dataset[i][j])
+
+    for attribute in attributes:
+        if isinstance(attribute[0], list):
+            distribution = calculateDistribution(attribute)
+            summaries.append(distribution)
+        else:
+            summaries.append((mean(attribute), stdev(attribute)))
     return summaries
 
 def summarizeByClass(dataset):
@@ -40,11 +61,16 @@ def calculateProbability(x, mean, stdev):
 def calculateClassProbabilities(summaries, inputVector):
     probabilities = {}
     for classValue, classSummaries in summaries.items():
-    	probabilities[classValue] = 1
-    	for i in range(len(classSummaries)):
-            mean, stdev = classSummaries[i]
-            x = inputVector[i]
-            probabilities[classValue] *= calculateProbability(x, mean, stdev)
+        probabilities[classValue] = 1
+        for i in range(len(classSummaries)):
+            if isinstance(classSummaries[i], list):
+                for j in range(len(inputVector[i])):
+                    if inputVector[i][j]:
+                        probabilities[classValue] *= classSummaries[i][j]
+            else:
+                mean, stdev = classSummaries[i]
+                x = inputVector[i]
+                probabilities[classValue] *= calculateProbability(x, mean, stdev)
     return probabilities
 
 def predict(summaries, inputVector):
@@ -97,7 +123,6 @@ def labelToNumber(name):
 def loadDataCovertype(filename):
     data_matrix = []
     f = open(filename, 'r')
-    aux = 0
     for line in f:
         tokens = line.split(',')
         features = []
@@ -106,21 +131,23 @@ def loadDataCovertype(filename):
 
         cat_feature = []
         for i in range(10, 14):
-            cat_feature.append(float(tokens[i]))
+            cat_feature.append(int(tokens[i]))
         features.append(cat_feature)
 
         cat_feature2 = []
         for i in range(14, 54):
-            cat_feature2.append(float(tokens[i]))
+            cat_feature2.append(int(tokens[i]))
         features.append(cat_feature2)
+        features.append(int(tokens[len(tokens) - 1]))
 
-        data = (features, tokens[len(tokens) - 1])
+        # data = (features, int(tokens[len(tokens) - 1]))
 
-        data_matrix.append(data)
+        data_matrix.append(features)
     return data_matrix
 
 def main():
-    all_set = loadData('iris/iris.data')
+    # all_set = loadData('iris/iris.data')
+    all_set = loadDataCovertype('covertype/covtype.data')
     random.shuffle(all_set)
 
     training_set = all_set[:math.floor(len(all_set)*0.8)]
