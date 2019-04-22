@@ -25,10 +25,10 @@ def stdev(numbers):
 def calculateDistribution(categorical_attribute):
     appearences = [0 for i in range(len(categorical_attribute[0]))]
     for instance in categorical_attribute:
-        for i in instance:
-            if instance[i]:
-                appearences [i] += 1
-    distribution = [appearences [i]/len(categorical_attribute) for i in range(len(appearences))]
+        for j in range(len(instance)):
+            if instance[j]:
+                appearences[j] += 1
+    distribution = [appearences[z]/len(categorical_attribute) for z in range(len(appearences))]
     return distribution
 
 def summarize(dataset):
