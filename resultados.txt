@@ -1,0 +1,184 @@
+### 3.1 Pruebas sobre conjunto Iris
+
+Realizamos una partición de 80% de entradas para entrenamiento y 20% de entradas para test.
+
+Ejecutamos el algoritmo 5 veces sobre distintas particiones del conjunto de datos Iris, siempre manteniendo la proporción 80/20.
+En la siguiente tabla se indica a que ejecución se corresponden los errores calculados sobre los conjuntos de entrenamiento y test para ID3, sobre test para KNN con k = {1,3,7} y bayes
+
+<table style="text-align:center;float:left">
+    <thead>
+        <tr>
+            <td>ID3</td>
+        </tr>
+    </thead>
+    <thead>
+        <tr>
+            <td>Ejecución</td>
+            <td>Entrenamiento</td>
+            <td>Test</td>
+        </tr>
+    </thead>
+    <tr>
+        <td>1</td>
+        <td>0.016</td>
+        <td>0.066</td>
+    </tr>
+    <tr>
+        <td>2</td>
+        <td>0.016</td>
+        <td>0.13</td>
+    </tr>
+    <tr>
+        <td>3</td>
+        <td>0.025</td>
+        <td>0.066</td>
+    </tr>
+    <tr>
+        <td>4</td>
+        <td>0.033</td>
+        <td>0.033</td>
+    </tr>
+    <tr>
+        <td>5</td>
+        <td>0.025</td>
+        <td>0.1</td>
+    </tr>
+     <tr>
+        <td>Promedio</td>
+        <td>0.023</td>
+        <td>0.079</td>
+    </tr>
+    
+</table>
+<table style="text-align:center;float:left">
+     <tr>
+        <td></td>
+    </tr>    
+</table>
+<table style="text-align:center;float:left">
+        <thead>
+        <tr>
+            <td>KNN</td>
+            <td>k = 1</td>
+        </tr>
+    </thead>
+    <thead>
+        <tr>
+            <td>Ejecución</td>
+            <td>Test</td>
+        </tr>
+    </thead>
+    <tr>
+        <td>1</td>
+        <td>0.033</td>
+    </tr>
+    <tr>
+        <td>2</td>
+        <td>0.000</td>
+    </tr>
+    <tr>
+        <td>3</td>
+        <td>0.033</td>
+    </tr>
+    <tr>
+        <td>4</td>
+        <td>0.010</td>
+    </tr>
+    <tr>
+        <td>5</td>
+        <td>0.066</td>
+    </tr>
+     <tr>
+        <td>Promedio</td>
+        <td>0.028</td>
+    </tr>
+    
+</table>
+<table style="text-align:center;float:left">
+     <tr>
+        <td></td>
+    </tr>    
+</table>
+<table style="text-align:center;float:left">
+        <thead>
+        <tr>
+            <td>KNN</td>
+            <td>k = 3</td>
+        </tr>
+    </thead>
+    <thead>
+        <tr>
+            <td>Ejecución</td>
+            <td>Test</td>
+        </tr>
+    </thead>
+    <tr>
+        <td>1</td>
+        <td>0.033</td>
+    </tr>
+    <tr>
+        <td>2</td>
+        <td>0.000</td>
+    </tr>
+    <tr>
+        <td>3</td>
+        <td>0.033</td>
+    </tr>
+    <tr>
+        <td>4</td>
+        <td>0.066</td>
+    </tr>
+    <tr>
+        <td>5</td>
+        <td>0.033</td>
+    </tr>
+     <tr>
+        <td>Promedio</td>
+        <td>0.033</td>
+    </tr>
+    
+</table>
+<table style="text-align:center;float:left">
+     <tr>
+        <td></td>
+    </tr>    
+</table>
+<table style="text-align:center;float:left">
+        <thead>
+        <tr>
+            <td>KNN</td>
+            <td>k = 7</td>
+        </tr>
+    </thead>
+    <thead>
+        <tr>
+            <td>Ejecución</td>
+            <td>Test</td>
+        </tr>
+    </thead>
+    <tr>
+        <td>1</td>
+        <td>0.000</td>
+    </tr>
+    <tr>
+        <td>2</td>
+        <td>0.000</td>
+    </tr>
+    <tr>
+        <td>3</td>
+        <td>0.033</td>
+    </tr>
+    <tr>
+        <td>4</td>
+        <td>0.066</td>
+    </tr>
+    <tr>
+        <td>5</td>
+        <td>0.100</td>
+    </tr>
+     <tr>
+        <td>Promedio</td>
+        <td>0.039</td>
+    </tr>
+    
+</table>

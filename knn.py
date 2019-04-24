@@ -49,11 +49,7 @@ def euclideanDistance(v1, v2):
     return math.sqrt(sum(res))
 
 def getNeighbors(training_set,test_instance,k):
-
-    distances = []
-    for index in range(len(training_set)):
-        dist = euclideanDistance(test_instance, training_set[index][0])
-        distances.append((training_set[index], dist))
+    distances = [(training_set[index],euclideanDistance(test_instance, training_set[index][0])) for index in range(len(training_set))]          
     distances.sort(key=lambda x: x[1])
     neighbors = distances[:k]
     return neighbors    
@@ -63,16 +59,10 @@ def mostVotedLabel(dataset):
     total = len(dataset)
     max_votes = -1
     most_voted_label = ''
-
     for ((features, label),dist) in dataset:
-        if label in count:
-            count[label] = count[label] + 1
-        else:
-            count[label] = 1         
-    for key,value in count.items():
-        if value > max_votes:
-            max_votes = value
-            most_voted_label = key
+        count[label] =  count.get(label, 0) + 1
+        if count[label] >= max_votes: 
+            max_votes, most_voted_label = count[label], label 
     return most_voted_label
 
 
@@ -80,7 +70,7 @@ def isSuccesfull(real_label,neighbors):
     return (real_label == mostVotedLabel(neighbors))     
 
 
-def main():
+def mainiris():
     all_set = loadData('iris/iris.data')
     random.shuffle(all_set)
 
@@ -97,19 +87,19 @@ def main():
             if (not isSuccesfull(test_set[i][1],n)):
                 errors += 1    
 
-        print("Errores para k:")
-        print(k)
+        print("Errores para k:",k)
         print()
         print(errors/len(test_set)) 
         print()       
 
-def mainB():
+def maincovertype():
     all_set = loadData('covertype/covtype.data')
     random.shuffle(all_set)
 
     training_set = all_set[:math.floor(len(all_set)*0.8)]
 
-    test_set = all_set[math.floor(len(all_set)*0.9999):]
+    test_set = all_set[math.floor(len(all_set)*0.999):]
+    print(len(test_set))
 
     test_res = []
 
@@ -120,11 +110,10 @@ def mainB():
             if (not isSuccesfull(test_set[i][1],n)):
                 errors += 1    
 
-        print("Errores para k:")
-        print(k)
+        print("Errores para k:",k)
         print()
         print(errors/len(test_set)) 
         print() 
 
 
-mainB()
+mainiris()
