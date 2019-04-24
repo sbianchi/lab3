@@ -52,6 +52,7 @@ def summarizeByClass(dataset):
     summaries = {}
     for classValue, instances in separated.items():
         summaries[classValue] = summarize(instances)
+        summaries[classValue].append(len(instances)/len(dataset))
     return summaries
 
 def calculateProbability(x, mean, stdev):
@@ -61,8 +62,8 @@ def calculateProbability(x, mean, stdev):
 def calculateClassProbabilities(summaries, inputVector):
     probabilities = {}
     for classValue, classSummaries in summaries.items():
-        probabilities[classValue] = 1
-        for i in range(len(classSummaries)):
+        probabilities[classValue] = classSummaries[-1]
+        for i in range(len(classSummaries) - 1):
             if isinstance(classSummaries[i], list):
                 for j in range(len(inputVector[i])):
                     if inputVector[i][j]:
